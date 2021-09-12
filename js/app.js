@@ -8,20 +8,25 @@ loadProducts();
 
 // show all product in UI 
 const showProducts = (products) => {
+  console.log(products);
   const allProducts = products.map((pd) => pd);
   for (const product of allProducts) {
     const image = product.images;
     const div = document.createElement("div");
     div.classList.add("product");
-    div.innerHTML = `<div class="single-product">
-      <div>
-    <img class="product-image" src=${image}></img>
+    div.innerHTML = `
+      <div class="single-product h-100 d-flex flex-column">
+        <div class="product-body">
+          <img class="product-image" src=${product.image}></img>
+          <h4>${product.title}</h4>
+          <p>Category: ${product.category}</p>
+          <h3>Price: $ ${product.price}</h3>
+        </div>
+        <div class="product-footer">
+          <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
+          <button id="details-btn" class="btn btn-danger">Details</button>
+        </div>
       </div>
-      <h3>${product.title}</h3>
-      <p>Category: ${product.category}</p>
-      <h2>Price: $ ${product.price}</h2>
-      <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-      <button id="details-btn" class="btn btn-danger">Details</button></div>
       `;
     document.getElementById("all-products").appendChild(div);
   }
@@ -78,3 +83,9 @@ const updateTotal = () => {
     getInputValue("total-tax");
   document.getElementById("total").innerText = grandTotal;
 };
+
+// cart button toggle
+document.getElementById('cart_toggle_btn').addEventListener('click', () => {
+  document.getElementById('my-cart').classList.toggle('active');
+  // document.getElementById('cart_toggle_btn').classList.toggle('active');
+});

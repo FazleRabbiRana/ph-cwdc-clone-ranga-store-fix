@@ -102,13 +102,14 @@ const updateTotal = () => {
 * Load detail
 */
 const loadDetail = id => {
+  loadingSpinner('flex');
   const url = `https://fakestoreapi.com/products/${id}`;
   fetch(url)
     .then(res => res.json())
     .then(data => showDetail(data));
 }
 
-// show detail function
+// show product detail in the UI
 const showDetail = product => {
   console.log(product);
   const detailContainer = document.getElementById('product_detail');
@@ -133,11 +134,17 @@ const showDetail = product => {
     </div>
   `;
   detailContainer.appendChild(productDetail);
+  loadingSpinner('none');
 }
 
 // close detail function
 const closeDetail = () => {
   document.getElementById('product_detail').textContent = '';
+}
+
+// loading spinner
+const loadingSpinner = (displayStatus) => {
+  document.getElementById('loading_spinner').style.display = displayStatus;
 }
 
 // cart button toggle

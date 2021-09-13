@@ -103,6 +103,7 @@ const updateTotal = () => {
 */
 const loadDetail = id => {
   loadingSpinner('flex');
+  document.getElementById('my-cart').classList.remove('active');
   const url = `https://fakestoreapi.com/products/${id}`;
   fetch(url)
     .then(res => res.json())
@@ -111,7 +112,6 @@ const loadDetail = id => {
 
 // show product detail in the UI
 const showDetail = product => {
-  console.log(product);
   const detailContainer = document.getElementById('product_detail');
   detailContainer.classList.toggle('active');
   const productDetail = document.createElement('div');

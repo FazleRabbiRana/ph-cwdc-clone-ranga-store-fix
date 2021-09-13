@@ -117,11 +117,13 @@ body {
  * Cart
 ------------------------- */
 .cart {
-  width: 100%;
   padding: 10px;
-  box-shadow: 0px 0px 15px gray;
+  box-shadow: 5px 5px 10px gray;
   border-radius: 10px;
   background: rgba(255, 255, 255, 1);
+  width: 320px;
+  position: fixed;
+  right: 12px;
 }
 .cart .table {
   font-size: 15px;
@@ -151,6 +153,7 @@ body {
 }
 .cart.active + .cart-toggle-btn {
   background-color: rgba(223, 189, 25, 0.9);
+  color: #212529;
 }
 .cart-icon {
   width: 24px;

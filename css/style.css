@@ -46,9 +46,9 @@ body {
   height: 150px;
   margin-bottom: 10px;
 }
-/**
-* Product details
-*/
+/* -------------------------
+ * Product details
+------------------------- */
 .single-product-detail {
   position: fixed;
   top: 50%;
@@ -127,6 +127,9 @@ body {
 }
 .cart .table {
   font-size: 15px;
+}
+.cart .table>:not(caption)>*>* {
+  padding: 5px;
 }
 .cart .table th {
   font-weight: 500;

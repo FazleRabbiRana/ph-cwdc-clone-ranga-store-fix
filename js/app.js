@@ -9,7 +9,6 @@ loadProducts();
 
 // show all product in UI 
 const showProducts = (products) => {
-  console.log(products[0]);
   const allProducts = products.map((pd) => pd);
   for (const product of allProducts) {
     const image = product.image;
@@ -33,7 +32,7 @@ const showProducts = (products) => {
           <button onclick="loadDetail(${product.id})" id="details-btn" class="btn btn-danger">Details</button>
         </div>
       </div>
-      `;
+    `;
     document.getElementById("all-products").appendChild(div);
   }
 };

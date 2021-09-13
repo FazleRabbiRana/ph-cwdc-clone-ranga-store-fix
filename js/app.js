@@ -15,7 +15,6 @@ const showProducts = (products) => {
     const image = product.image;
     const ratingAverage = product.rating.rate;
     const ratingCount = product.rating.count;
-    console.log(ratingAverage);
     const div = document.createElement("div");
     div.classList.add("product");
     div.innerHTML = `
@@ -27,11 +26,11 @@ const showProducts = (products) => {
           <h6 class="my-2">
             <small>Rating: ${ratingAverage} (${ratingCount})</small>
           </h6>
-          <h3>Price: $ ${product.price}</h3>
+          <h2>Price: $ ${product.price}</h2>
         </div>
         <div class="product-footer">
-          <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-          <button id="details-btn" class="btn btn-danger">Details</button>
+          <button onclick="addToCart(${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
+          <button onclick="loadDetail(${product.id})" id="details-btn" class="btn btn-danger">Details</button>
         </div>
       </div>
       `;
@@ -39,9 +38,9 @@ const showProducts = (products) => {
   }
 };
 
-// update cart
+// addToCart function
 let count = 0;
-const addToCart = (id, price) => {
+const addToCart = (price) => {
   // update number of added products
   count = count + 1;
   document.getElementById("total-Products").innerText = count;
@@ -56,6 +55,7 @@ const addToCart = (id, price) => {
   updateTotal();
 };
 
+// get inputValue function
 const getInputValue = (id) => {
   const element = document.getElementById(id).innerText;
   const converted = parseFloat(element);
@@ -97,6 +97,48 @@ const updateTotal = () => {
   const grandTotal = getInputValue("price") + getInputValue("delivery-charge") + getInputValue("total-tax");
   document.getElementById("total").innerText = grandTotal.toFixed(2);
 };
+
+/**
+* Load detail
+*/
+const loadDetail = id => {
+  const url = `https://fakestoreapi.com/products/${id}`;
+  fetch(url)
+    .then(res => res.json())
+    .then(data => showDetail(data));
+}
+
+// show detail function
+const showDetail = product => {
+  console.log(product);
+  const detailContainer = document.getElementById('product_detail');
+  detailContainer.classList.toggle('active');
+  const productDetail = document.createElement('div');
+  productDetail.classList.add('single-product-detail');
+  productDetail.innerHTML = `
+    <div class="detail-inner">
+      <div class="detail-content">
+        <div class="detail-header d-flex flex-nowrap align-items-start justify-content-between">
+          <h4 class="mb-2 px-3 pt-2">${product.title}</h4>
+          <button onclick="closeDetail()" id="detail_close_btn" class="flex-shrink-0">x</button>
+        </div>
+        <div class="detail-body p-3">
+          <h6 class="mb-2 text-success">
+            <span class="d-inline-block me-3">Average rating: ${product.rating.rate}</span>
+            <span class="d-inline-block">Total Rating: ${product.rating.count}</span>
+          </h6>
+          <p class="mb-0">${product.description}</p>
+        </div>
+      </div>
+    </div>
+  `;
+  detailContainer.appendChild(productDetail);
+}
+
+// close detail function
+const closeDetail = () => {
+  document.getElementById('product_detail').textContent = '';
+}
 
 // cart button toggle
 document.getElementById('cart_toggle_btn').addEventListener('click', () => {

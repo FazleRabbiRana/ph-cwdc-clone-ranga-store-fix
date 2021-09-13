@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- title -->
-  <title>Rana Fashion Store</title>
+  <title>Rana Online Store</title>
 
   <!-- favicon -->
   <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
@@ -26,14 +26,14 @@
   <!-- header area -->
   <header>
     <div class="container text-center py-4">
-      <h1 class="mb-0"><span class="h3 fst-italic">Welcome to</span> <span class="d-block text-success fw-bold">Rana Fashion Store</span></h1>
+      <h1 class="mb-0"><span class="h3 fst-italic">Welcome to</span> <span class="d-block text-success fw-bold">Rana Online Store</span></h1>
     </div>
   </header>
 
   <!-- main area -->
   <main class="main container-xxl mb-5">
     <!-- search field -->
-    <div class="search-field mt-3 mb-5 mx-auto">
+    <div class="search-field mt-4 mb-5 mx-auto">
       <div class="search-box input-group">
         <input id="input-field" class="form-control px-3 py-2" type="text" placeholder="Enter product name"/>
         <button type="button" class="btn btn-primary px-4 py-2 search-button" data-toggle="button" aria-pressed="false"
@@ -46,13 +46,12 @@
     <!-- products -->
     <div class="row justify-content-center justify-content-lg-start">
       <!-- all products -->
-      <div class="col-12">
-        <h1></h1>
+      <div class="col-12 col-lg-8 col-xl-9">
         <div id="all-products" class=""></div>
       </div>
 
       <!-- cart -->
-      <div class="col-12 col-md-3 col-lg-3 col-sm-5 cart-main">
+      <div class="col-12 col-lg-4 col-xl-3 cart-main">
         <div class="cart" id="my-cart">
           <table class="table">
             <thead>
@@ -100,12 +99,15 @@
             <button class="btn btn-primary text-center">Buy Now</button>
           </div>
         </div>
-        <button id="cart_toggle_btn" class="cart-toggle-btn d-md-none d-inline-flex align-items-center justify-content-center" title="My Cart">
+        <button id="cart_toggle_btn" class="cart-toggle-btn d-lg-none d-inline-flex align-items-center justify-content-center" title="My Cart display toggle">
           <img src="./img/cart-icon.png" alt="Icon show cart" class="cart-icon show">
           <img src="./img/close-icon.png" alt="Icon close cart" class="cart-icon close">
         </button>
       </div>
     </div>
+
+    <!-- product detail -->
+    <div id="product_detail" class="product-detail"></div>
   </main>
 
   <!-- footer area -->

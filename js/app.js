@@ -1,5 +1,11 @@
+// loading spinner
+const loadingSpinner = (displayStatus) => {
+  document.getElementById('loading_spinner').style.display = displayStatus;
+}
+
 // load products
 const loadProducts = () => {
+  loadingSpinner('flex');
   const url = `https://fakestoreapi.com/products`;
   fetch(url)
     .then((response) => response.json())
@@ -22,9 +28,20 @@ const showProducts = (products) => {
           <img class="product-image" src=${image}></img>
           <h4>${product.title}</h4>
           <p class="my-2">Category: ${product.category}</p>
-          <h6 class="my-2">
-            <small>Rating: ${ratingAverage} (${ratingCount})</small>
-          </h6>
+          <div class="rating">
+            <div class="rating-stars">
+              <div class="empty-rating">
+                <span class="star">★★★★★</span>
+              </div>
+              <div class="fill-rating" style="width: ${(ratingAverage * 20) + '%'}">
+                <span class="star">★★★★★</span>
+              </div>
+            </div>
+            <div class="rating-texts">
+              <span class="rating-average">${ratingAverage}</span> 
+              <span class="rating-count">(${ratingCount})</span>
+            </div>
+          </div>
           <h2>Price: $ ${product.price}</h2>
         </div>
         <div class="product-footer">
@@ -35,6 +52,8 @@ const showProducts = (products) => {
     `;
     document.getElementById("all-products").appendChild(div);
   }
+  document.getElementById('notice').textContent = '';
+  loadingSpinner('none');
 };
 
 // addToCart function
@@ -113,20 +132,33 @@ const loadDetail = id => {
 const showDetail = product => {
   const detailContainer = document.getElementById('product_detail');
   detailContainer.classList.toggle('active');
+  const ratingAverage = product.rating.rate;
+  const ratingCount = product.rating.count;
   const productDetail = document.createElement('div');
   productDetail.classList.add('single-product-detail');
   productDetail.innerHTML = `
     <div class="detail-inner">
       <div class="detail-content">
         <div class="detail-header d-flex flex-nowrap align-items-start justify-content-between">
-          <h4 class="mb-2 px-3 pt-2">${product.title}</h4>
+          <h4 class="px-3 pt-2">${product.title}</h4>
           <button onclick="closeDetail()" id="detail_close_btn" class="flex-shrink-0">x</button>
         </div>
         <div class="detail-body p-3">
-          <h6 class="mb-2 text-success">
-            <span class="d-inline-block me-3">Average rating: ${product.rating.rate}</span>
-            <span class="d-inline-block">Total Rating: ${product.rating.count}</span>
-          </h6>
+          <img class="product-image" src=${product.image}></img>
+          <div class="rating">
+            <div class="rating-stars">
+              <div class="empty-rating">
+                <span class="star">★★★★★</span>
+              </div>
+              <div class="fill-rating" style="width: ${(ratingAverage * 20) + '%'}">
+                <span class="star">★★★★★</span>
+              </div>
+            </div>
+            <div class="rating-texts">
+              <span class="rating-average">${ratingAverage}</span> 
+              <span class="rating-count">(${ratingCount})</span>
+            </div>
+          </div>
           <p class="mb-0">${product.description}</p>
         </div>
       </div>
@@ -141,12 +173,52 @@ const closeDetail = () => {
   document.getElementById('product_detail').textContent = '';
 }
 
-// loading spinner
-const loadingSpinner = (displayStatus) => {
-  document.getElementById('loading_spinner').style.display = displayStatus;
-}
-
 // cart button toggle
 document.getElementById('cart_toggle_btn').addEventListener('click', () => {
   document.getElementById('my-cart').classList.toggle('active');
 });
+
+/**
+* Search product
+*/
+const searchProduct = () => {
+  loadingSpinner('flex');
+  const url = `https://fakestoreapi.com/products`;
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => displaySearchedProducts(data));
+}
+
+// display searched product
+const displaySearchedProducts = products => {
+  const notice = document.getElementById('notice');
+  const allProductsContainer = document.getElementById("all-products");
+  const searchField = document.getElementById('input-field');
+  const searchText = searchField.value.toLowerCase();
+  // clear input field
+  searchField.value = '';
+  // clear all products from ui
+  allProductsContainer.textContent = '';
+  // notice for blank search
+  if(searchText === '') {
+    notice.innerHTML = `
+      <h4 class="text-danger">⚠️ Type something before search.</h4>
+      <button onclick="loadProducts()" class="btn btn-primary">Click here to show all products</button>
+    `;
+    loadingSpinner('none');
+    return;
+  }
+  // show searched product
+  const searchedProducts = products.filter(product => product.title.toLowerCase().includes(searchText));
+  if(searchedProducts.length !== 0) {
+    showProducts(searchedProducts);
+    notice.innerHTML = `<h4 class="text-success">${searchedProducts.length} products found.</h4>`;
+  } else {
+    notice.innerHTML = `
+      <h4 class="text-secondary">No products found.</h4>
+      <button onclick="loadProducts()" class="btn btn-primary">Click here to show all products</button>
+    `;
+  }
+  // hide loading spinner
+  loadingSpinner('none');
+}

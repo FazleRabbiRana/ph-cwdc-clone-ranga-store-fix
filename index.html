@@ -36,25 +36,20 @@
     <div class="search-field mt-4 mb-5 mx-auto">
       <div class="search-box input-group">
         <input id="input-field" class="form-control px-3 py-2" type="text" placeholder="Enter product name"/>
-        <button type="button" class="btn btn-primary px-4 py-2 search-button" data-toggle="button" aria-pressed="false"
-          autocomplete="off" id="search-btn" onclick="loadProducts()">
+        <button type="button" class="btn btn-primary px-4 py-2 search-button" id="search-btn" onclick="searchProduct()">
           Search
         </button>
       </div>
     </div>
 
+    <!-- notice -->
+    <div id="notice" class="text-center mb-3"></div>
+
     <!-- products -->
     <div class="row justify-content-center justify-content-lg-start">
       <!-- all products -->
       <div class="col-12 col-lg-8 col-xl-9">
-        <div id="all-products">
-          <!-- loading spinner -->
-          <div id="loading_spinner" class="align-items-center justify-content-center text-center">
-            <div class="spinner-border text-primary" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        </div>
+        <div id="all-products"></div>
       </div>
 
       <!-- cart -->
@@ -115,6 +110,13 @@
 
     <!-- product detail -->
     <div id="product_detail" class="product-detail"></div>
+
+    <!-- loading spinner -->
+    <div id="loading_spinner" class="align-items-center justify-content-center text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
   </main>
 
   <!-- footer area -->
